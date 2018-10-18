@@ -1,0 +1,75 @@
+
+te: passwords are in /etc/natas_webpass/level_name (example: natas1)
+______________________________________________________________________
+Level 0:
+Username: natas0
+Password: natas0
+URL:      http://natas0.natas.labs.overthewire.org
+
+	problem: you'll see a page that says "you can find the password for the next level on this page."
+
+
+	answer: look in the source code to find the password for the next level.
+
+	password: gtVrDuiDfck831PqWsLEZy5gyDz1clto
+
+	what-I-learned: looking at source code can be helpful, you may find passwords, or ways to bypass security checks.
+_______________________________________________________________________
+Level 1:
+
+Username: natas1
+Password: gtVrDuiDfck831PqWsLEZy5gyDz1clto
+URL:      http://natas1.natas.labs.overthewire.org
+
+	problem:You'll see a page that says "you can find the password for the next level on this page, but rightclicking has been blocked!"
+
+	answer: disable javascript, or change the url to include "view-source: URL_here" 
+
+	password:ZluruAthQk7Q2MqmDeTiUij2ZvWy2mBi
+
+	what-I-learned: client side checks can be easily bypassed.
+_________________________________________________________________________
+Level 2:
+
+Username: natas2
+Password: ZluruAthQk7Q2MqmDeTiUij2ZvWy2mBi
+URL:      http://natas2.natas.labs.overthewire.org
+
+	problem:so you log in and you are faced with a page that says "there is nothing on this page."as you look through the source, you see that a jpg is in the source, from here you check for a /files page
+
+	answer: once you get to "your_url/files" you see the jpg, and a users.txt, open this txt file.
+
+	password: sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14
+
+	what-I-learned: be sure to look around, try common directories, and pay attention to detail. dirb is a good tool to enumerate avaliable directories/pages on a webserver.
+_________________________________________________________________________
+Level 3:
+
+Username: natas3
+Password:  sJIJNW6ucpu6HPZ1ZAchaDtwd7oGrD14
+URL:      http://natas3.natas.labs.overthewire.org
+
+	problem:you find a page that says "there is nothing on this page" even in the source it says "even google will not help you this time"
+
+	answer: there ends up being a robots.txt file, which has a directory called "s3cr3t". if you go into it, and open users.txt, you get the password.
+
+	password: Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ
+
+	what-I-learned: some sites may have a robot.txt page that contains useful information, and enumeration is important. 
+____________________________________________________________________
+
+Level 4:
+
+Username: natas4
+Password: Z9tkRkWmpt9Qr7XrR5jWRkgOU901swEZ
+URL:      http://natas4.natas.labs.overthewire.org
+
+	problem: you come across a page that says "Access disallowed: you are visiting from "" while authorized users should come only from "http://natas5.natas.labs.overthewire.org/"
+
+
+	answer: if you configure burpsuite as your proxy, and edit the request to show you are coming from natas5 instead of natas4, it will let you in.
+
+	password: iX6IOfmpN7AYOQGPwtn3fXpbaJVJcHfq
+
+	what-I-learned:	burp suite is a good tool for editing requests, and bypassing client side checks on websites.
+
